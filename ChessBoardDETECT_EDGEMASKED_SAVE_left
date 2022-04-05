@@ -11,12 +11,10 @@ worldPoints = generateWorldPoints(detector, 'SquareSize', squareSize);
 
 % save process
 % FILES SIZE
-% THIS PART IS YOUR CONFIGURE FROM CALIBRATION PART
 File1_limit = length(imageFileNames1); % LEFT
-File2_limit = length(imageFileNames2); % RIGHT
+
 
 % SAVE EDGE MASKED IMAGE FROM IMAGEFILENAME
-% LEFT CAMERA SAVE
 for i=1: File1_limit
     I = imread(imageFileNames1{i});
     [imagePoints,boardSize,imagesUsed] = detectCheckerboardPoints(I);
@@ -31,21 +29,7 @@ for i=1: File1_limit
     FileName = sprintf(FormatName,i);
     saveas(fig, FileName);
 end
-% RIGHT CAMERA SAVE
-for i=1: File2_limit
-    I = imread(imageFileNames1{i});
-    [imagePoints,boardSize,imagesUsed] = detectCheckerboardPoints(I);
-   
-    
-    fig = figure;
-    imshow(I);
-    hold on;
 
-    plot(imagePoints(:,1), imagePoints(:,2), 'go','MarkerSize', 12);
-    FormatName = 'right_detectedChessBoardPoint%d.png';
-    FileName = sprintf(FormatName,i);
-    saveas(fig, FileName);
-end
 
 % Read one of the images from the first stereo pair
 %I1 = imread(imageFileNames1{1});
