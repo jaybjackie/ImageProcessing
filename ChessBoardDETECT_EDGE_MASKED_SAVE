@@ -1,6 +1,9 @@
-% .
-% .
-% .
+% .your Image File Path
+% imageFileNames1 = {'yourDir/yourimageFolder/image1',...
+%                    'yourDir/yourimageFolder/image2',...                    
+%                  }
+
+
 % Detect calibration pattern in images
 detector = vision.calibration.stereo.CheckerboardDetector();
 [imagePoints, imagesUsed] = detectPatternPoints(detector, imageFileNames1, imageFileNames2);
@@ -9,17 +12,19 @@ detector = vision.calibration.stereo.CheckerboardDetector();
 squareSize = 80;  % in units of 'millimeters'
 worldPoints = generateWorldPoints(detector, 'SquareSize', squareSize);
 
-% save process
+% SAVE IMAGE WITH EDGE MASKED
+
+% change here, your images path
+imageFile = imageFileNames1;
+
 % FILES SIZE
-File1_limit = length(imageFileNames1); % LEFT
+file_limit = length(imageFile);
 
-
-% SAVE EDGE MASKED IMAGE FROM IMAGEFILENAME
-for i=1: File1_limit
-    I = imread(imageFileNames1{i});
+% Iteration over whole ImageFile
+for i=1: file_limit
+    I = imread(imageFile{i});
     [imagePoints,boardSize,imagesUsed] = detectCheckerboardPoints(I);
    
-    
     fig = figure;
     imshow(I);
     hold on;
@@ -30,7 +35,7 @@ for i=1: File1_limit
     saveas(fig, FileName);
 end
 
-
+% WE ARE NOT USE THIS PART, single image read
 % Read one of the images from the first stereo pair
 %I1 = imread(imageFileNames1{1});
 %[mrows, ncols, ~] = size(I1);
